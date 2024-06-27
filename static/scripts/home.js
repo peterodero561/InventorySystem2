@@ -37,6 +37,7 @@ async function fetchStock() {
     tbody.innerHTML = '';
 
     stocks.forEach(stock => {
+    
         const tr = document.createElement('tr');
 
         const td1 = document.createElement('td');
@@ -51,7 +52,7 @@ async function fetchStock() {
         td3.textContent = stock.itemCategory;
         td4.textContent = stock.itemBrand;
         td5.textContent = stock.itemNotes;
-        td6.innerHTML = '<button class="edit">Edit</button><button class="delete">Delete</button>';
+        td6.innerHTML = `<button class="edit" data-id="${stock.item_id}">Edit</button><button class="delete" data-id="${stock.item_id}">Delete</button>`;
 
         tr.appendChild(td1);
         tr.appendChild(td2);
@@ -62,5 +63,60 @@ async function fetchStock() {
 
         tbody.appendChild(tr);
     });
+
+    document.querySelectorAll('.edit').forEach(button => {
+        button.addEventListener('click', function() {
+            const itemId = this.dataset.id;
+            editItem(itemId);
+        });
+    });
+
+    document.querySelectorAll('.delete').forEach(button => {
+        button.addEventListener('click', function() {
+            const itemId = this.dataset.id;
+            deleteItem(itemId);
+        });
+    });
 }
+
+async function editItem(itemId) {
+    const itemName = prompt('Enter new item name:');
+    const itemQuantity = prompt('Enter new quantity:');
+    const itemCategory = prompt('Enter new category:');
+    const itemBrand = prompt('Enter new brand:');
+    const itemNotes = prompt('Enter new notes:');
+
+    fetch(`http://localhost:5000/edit/${itemId}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            itemName: itemName,
+            itemQuantity: itemQuantity,
+            itemCategory: itemCategory,
+            itemBrand: itemBrand,
+            itemNotes: itemNotes
+        })
+    }).then(response => {
+        if (response.ok) {
+            console.log('Item edited successfully');
+            fetchStock();
+        } else {
+            console.error('Failed to edit item');
+        }
+    }).catch(error => console.error('Error:', error));
+}
+
+async function deleteItem(itemId) {
+    fetch(`http://localhost:5000/delete/${itemId}`, {
+        method: 'DELETE'
+    }).then(response => {
+        if (response.ok) {
+            console.log('Item deleted successfully');
+            fetchStock();
+        } else {
+            console.error('Failed to delete item');
+        }
+    }).catch(error => console.error('Error:', error));
+}
+
 fetchStock();
