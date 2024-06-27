@@ -65,6 +65,42 @@ def get_stock():
 
     return jsonify(stocks), 200
 
+@app.route('/delete/<int:item_id>', methods=['DELETE'])
+def del_item(item_id):
+    try:
+        cur = mysql.connection.cursor()
+        cur.execute('DELETE FROM general WHERE item_id=%s', (item_id,))
+        mysql.connection.commit()
+        cur.close()
+
+        return 'Item DELETED', 200
+
+    except Exception as e:
+        return str(e), 400
+
+
+@app.route('/edit/<int:item_id>', methods=['PUT'])
+def edit_item(item_id):
+    try:
+        data = request.get_json()
+        name = data['itemName']
+        quantity = data['itemQuantity']
+        category = data['itemCategory']
+        brand = data['itemBrand']
+        notes = data['itemNotes']
+
+        cur = mysql.connection.cursor()
+        cur.execute('UPDATE general SET item_name=%s, item_quantity=%s, item_category=%s, brand=%s, notes=%s WHERE item_id=%s', (name, quantity, category, brand,notes, item_id))
+        mysql.connection.commit()
+        cur.close()
+
+        return 'item UPDATED', 200
+
+    except Exception as e:
+        return str(e), 400
+
+
+
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=5000)
