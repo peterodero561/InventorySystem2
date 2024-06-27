@@ -5,8 +5,8 @@
 #### where all the records of the data stored will be displayed
 ![Home pic](https://github.com/peterodero561/InventorySystem2/blob/main/static/images/home.png)
 
-### a) Created database to handle the storage of the records
--- The sql code
+### a) Database to handle the storage of the records
+The sql code
 ```sql
 CREATE DATABASE IF NOT EXISTS inventory;
 USE inventory;
@@ -20,3 +20,7 @@ CREATE TABLE general(
 	notes VARCHAR(100)
 	);
 ```
+
+### b) Added Edit and Delete Functionality to the records  being stored
+One can now edit the records stored in the database via prompt windows
+![home page2](https://github.com/peterodero561/InventorySystem2/blob/main/static/images/home2.png)
