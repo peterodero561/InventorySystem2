@@ -24,3 +24,23 @@ CREATE TABLE general(
 ### b) Added Edit and Delete Functionality to the records  being stored
 One can now edit the records stored in the database via prompt windows
 ![home page2](https://github.com/peterodero561/InventorySystem2/blob/main/static/images/home2.png)
+
+
+## 2. Login page
+#### Allows users to login to view the contents of the Inventory
+![Login page](https://github.com/peterodero561/InventorySystem2/blob/main/static/images/login.png)
+
+### a) Database to handle the storage of user's credentials
+sql code
+```sql
+-- create table
+CREATE TABLE IF NOT EXISTS accounts (
+	id INT AUTO_INCREMENT PRIMARY KEY,
+	username VARCHAR(20) NOT NULL UNIQUE,
+	password VARCHAR(20) NOT NULL,
+	email VARCHAR(20) NOT NULL,
+);
+-- test cases
+INSERT INTO accounts (username, password, email) VALUES
+('testuser', 'testpassword', 'testuser@example.com'),
+```
