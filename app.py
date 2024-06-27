@@ -1,7 +1,8 @@
 #!/usr/bin/python3
-from flask import request, render_template, Flask, jsonify
+from flask import request, render_template, Flask, jsonify, session
 from flask_cors import CORS
 from flask_mysqldb import MySQL
+import MySQLdb.cursors
 
 # Creating Flask app
 app = Flask(__name__)
@@ -16,6 +17,10 @@ app.config['MYSQL_PASSWORD'] = 'Peterodero561@'
 app.config['MYSQL_DB'] = 'inventory'
 
 mysql = MySQL(app)
+
+# secret key for creating unique sessions
+app.secret_key = '1234'
+
 
 @app.route('/add', methods=['POST'])
 def add_item():
@@ -36,7 +41,6 @@ def add_item():
     except Exception as e:
         return str(e), 400
 
-@app.route('/')
 @app.route('/home')
 def home_page():
     return render_template('home.html')
@@ -99,8 +103,69 @@ def edit_item(item_id):
     except Exception as e:
         return str(e), 400
 
+@app.route('/', methods=['GET', 'POST'])
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    message = ''
+    if request.method == 'POST' and 'username' in request.form and 'password' in request.form:
+        username = request.form['username']
+        password = request.form['password']
+        cur = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+        cur.execute('SELECT * FROM password WHERE username=%s AND password=%s', (username, password))
+        account = cur.fetchone()
+        cur.close()
+        if account:
+            session['loggedin'] = True
+            session['id'] = account['pass_id']
+            session['username'] = account['username']
+            message = 'Logged in Succesfully'
+            return render_template('home.html', message=message)
+        else:
+            message = 'Incorrect username/password'
+
+    return render_template('login.html', message=message)
+
+
+@app.route('/logout')
+def logout():
+    session.pop['loggedin', None]
+    session.pop['id', None]
+    session.pop['username', None]
+    return render_template('login.html')
+
+@app.route('/register')
+def register():
+    message = ''
+    if request.method == 'POST' and 'username' in request.form and 'password' in request.form and 'email' in request.form:
+        username = request.form['username']
+        password = request.form['password']
+        email = request.form['email']
+
+        cur = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+        cur.execute('SELECT * FROM password WHERE username=%s', (username, ))
+        account = cur.fetchone()
+
+        # check credibility of information filled
+        if account:
+            message = 'Account already exists'
+        elif not re.match(r'[^@]+@[^@]+\.[^@]+', email):
+            msg = 'Invalid email address !'
+        elif not re.match(r'[A-Za-z0-9]+', username):
+            msg = 'Username must contain only characters and numbers !'
+        elif not username or not password or not email:
+            msg = 'Please fill out the form !'
+        else:
+            cur.execute('INSERT INTO password(username, password, email) VALUES (%s, %s, %s)', (username, password, email))
+            mysql.connection.commit()
+            cur.close()
+            message = 'Logged in successfully'
+    
+    elif request.method == 'POST':
+        message = 'Please fill the form'
+    
+    return render_template('register.html', message=message)
 
 
 
-if __name__ == '__main__':
+if  __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=5000)
