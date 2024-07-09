@@ -1,0 +1,76 @@
+/* signup.css */
+
+/* General styles for form container */
+.container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    
+}
+
+#form-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.form {
+    background: #f9f8f8;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    width: 300px;
+}
+
+.image-container {
+    margin-left: 20px;
+}
+
+.image-container img {
+    max-width: 100%;
+    height: auto;
+}
+
+/* Styles for labels and inputs */
+label {
+    display: block;
+    margin-top: 10px;
+}
+
+input[type="text"], input[type="email"], input[type="password"] {
+    width: 95%;
+    padding: 10px;
+    margin-top: 5px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+button {
+    width: 100%;
+    padding: 10px;
+    background: #00ff1a;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+button:hover {
+    background: #19ec06;
+}
+
+.toggle-form {
+    margin-top: 10px;
+    text-align: center;
+}
+
+.toggle-form a {
+    color: #00ff1a;
+    text-decoration: none;
+}
+
+.toggle-form a:hover {
+    text-decoration: underline;
+}
