@@ -120,3 +120,25 @@ async function deleteItem(itemId) {
 }
 
 fetchStock();
+
+document.getElementById('logout').addEventListener('click', async function(event){
+    //window.location.href='login.html';
+    event.preventDefault();
+
+    try {
+        const response = await fetch('/logout', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'}
+        });
+        
+        if (response.ok) {
+            window.location.href = '/login'
+        } else {
+            console.error('Logout Failed');
+        }
+    }
+    catch (error){
+        console.error('Network Error', error)
+    }
+
+});
