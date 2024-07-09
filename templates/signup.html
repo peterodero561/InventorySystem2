@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up / Sign In</title>
+    <link rel="stylesheet" href="../static/styles/signup.css">
+</head>
+<body>
+    <div class="container">
+        <div id="form-container">
+            <!-- Signup Form -->
+            <form id="signup-form" class="form" method="POST" action="/register">
+                <h2>Sign up</h2>
+                <input type="text" placeholder="Full Name" name="fullname" required>
+                <input type="email" placeholder="Email" name="email" required>
+                <input type="password" placeholder="Password" name="password" required>
+                
+                <label>
+                    <input type="checkbox" required>
+                    I agree all statements in Terms of service
+                </label>
+                <button type="submit">Register</button>
+                <p class="toggle-form">
+                    <a href="/login">Sign In</a>
+                </p>
+            </form>
+            <!-- Display message from Flask -->
+            {% if message %}
+                <p>{{ message }}</p>
+            {% endif %}
+        </div>
+        <div class="image-container">
+            <img src="../static/images/signup.jpeg" alt="Illustration">
+        </div>
+    </div>
+    <!-- <script src="signup.js"></script> -->
+</body>
+</html>
