@@ -11,9 +11,29 @@ body {
     overflow: hidden;
 }
 
+header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+}
+
 h1 {
     text-align: center;
     margin-top: 20px;
+}
+
+.logout {
+    padding: 10px 20px;
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.logout:hover{
+    background-color: #c82333;
 }
 
 form {
