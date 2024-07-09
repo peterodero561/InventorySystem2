@@ -36,9 +36,14 @@ async function fetchStock() {
     const tbody = document.querySelector('#inventory-table tbody');
     tbody.innerHTML = '';
 
-    stocks.forEach(stock => {
+    stocks.forEach((stock, index) => {
     
         const tr = document.createElement('tr');
+
+        // Create and populate numbering cell
+        const tdNumber = document.createElement('td');
+        tdNumber.textContent = index + 1; // Start numbering from 1
+        tr.appendChild(tdNumber);
 
         const td1 = document.createElement('td');
         const td2 = document.createElement('td');
