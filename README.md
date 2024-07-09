@@ -32,14 +32,20 @@ One can now edit the records stored in the database via prompt windows
 #### Allows Admin to login to view the contents of the Inventory
 ![Login page](https://github.com/peterodero561/InventorySystem2/blob/main/static/images/login.png)
 
+#### Admin homepage
+![Login page](https://github.com/peterodero561/InventorySystem2/blob/main/static/images/home3.png)
+
 ### b) User Login page
 #### Allows users to login to view the records
 ![Sign In page](https://github.com/peterodero561/InventorySystem2/blob/main/static/images/signin.png)
 
-#### c) Allows users to Sign up
+#### Users home page
+![Login page](https://github.com/peterodero561/InventorySystem2/blob/main/static/images/home4.png)
+
+#### Allows users to Sign up
 ![Sign UP page](https://github.com/peterodero561/InventorySystem2/blob/main/static/images/signup.png)
 
-### d) Database to handle the storage of users credentials
+### c) Database to handle the storage of users credentials
 sql code
 ```sql
 -- create table
