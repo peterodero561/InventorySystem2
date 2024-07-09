@@ -1,8 +1,9 @@
 #!/usr/bin/python3
-from flask import request, render_template, Flask, jsonify, session
+from flask import request, render_template, Flask, jsonify, session, redirect, url_for
 from flask_cors import CORS
 from flask_mysqldb import MySQL
 import MySQLdb.cursors
+import re
 
 # Creating Flask app
 app = Flask(__name__)
@@ -40,10 +41,6 @@ def add_item():
         return 'Item added', 200
     except Exception as e:
         return str(e), 400
-
-@app.route('/home')
-def home_page():
-    return render_template('home.html')
 
 
 @app.route('/stock', methods=['GET'])
@@ -107,63 +104,63 @@ def edit_item(item_id):
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     message = ''
-    if request.method == 'POST' and 'username' in request.form and 'password' in request.form:
-        username = request.form['username']
+    if request.method == 'POST' and 'email' in request.form and 'password' in request.form:
+        email = request.form['email']
         password = request.form['password']
         cur = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-        cur.execute('SELECT * FROM password WHERE username=%s AND password=%s', (username, password))
-        account = cur.fetchone()
+        cur.execute('SELECT * FROM users WHERE email=%s AND password=%s', (email, password))
+        user = cur.fetchone()
         cur.close()
-        if account:
+        if user:
             session['loggedin'] = True
-            session['id'] = account['pass_id']
-            session['username'] = account['username']
+            session['id'] = user['id']
+            session['email'] = user['email']
             message = 'Logged in Succesfully'
             return render_template('home.html', message=message)
         else:
             message = 'Incorrect username/password'
 
-    return render_template('login.html', message=message)
+    return render_template('signin.html', message=message)
 
 
-@app.route('/logout')
+@app.route('/logout', methods=['POST', 'GET'])
 def logout():
-    session.pop['loggedin', None]
-    session.pop['id', None]
-    session.pop['username', None]
-    return render_template('login.html')
+    session.pop('loggedin', None)
+    session.pop('id', None)
+    session.pop('username', None)
+    return redirect(url_for('login'))
 
-@app.route('/register')
+@app.route('/register', methods=['POST', 'GET'])
 def register():
     message = ''
-    if request.method == 'POST' and 'username' in request.form and 'password' in request.form and 'email' in request.form:
-        username = request.form['username']
+    if request.method == 'POST' and 'fullname' in request.form and 'password' in request.form and 'email' in request.form:
+        fullname = request.form['fullname']
         password = request.form['password']
         email = request.form['email']
 
         cur = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-        cur.execute('SELECT * FROM password WHERE username=%s', (username, ))
-        account = cur.fetchone()
+        cur.execute('SELECT * FROM users WHERE email=%s', (email, ))
+        user = cur.fetchone()
 
         # check credibility of information filled
-        if account:
+        if user:
             message = 'Account already exists'
         elif not re.match(r'[^@]+@[^@]+\.[^@]+', email):
             msg = 'Invalid email address !'
-        elif not re.match(r'[A-Za-z0-9]+', username):
+        elif not re.match(r'[A-Za-z0-9]+', fullname):
             msg = 'Username must contain only characters and numbers !'
-        elif not username or not password or not email:
+        elif not fullname or not password or not email:
             msg = 'Please fill out the form !'
         else:
-            cur.execute('INSERT INTO password(username, password, email) VALUES (%s, %s, %s)', (username, password, email))
+            cur.execute('INSERT INTO users (full_name, password, email) VALUES (%s, %s, %s)', (fullname, password, email))
             mysql.connection.commit()
             cur.close()
-            message = 'Logged in successfully'
+            message = 'Signed up successfully. Proceed to Sign In'
     
     elif request.method == 'POST':
         message = 'Please fill the form'
     
-    return render_template('register.html', message=message)
+    return render_template('signup.html', message=message)
 
 
 
