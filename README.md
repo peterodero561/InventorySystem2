@@ -21,24 +21,33 @@ CREATE TABLE general(
 	);
 ```
 
-### b) Added Edit and Delete Functionality to the records  being stored
+### b) Edit and Delete Functionality to the records  being stored
 One can now edit the records stored in the database via prompt windows
-![home page2](https://github.com/peterodero561/InventorySystem2/blob/main/static/images/home2.png)
+![home page3](https://github.com/peterodero561/InventorySystem2/blob/main/static/images/home3.png)
 
 
-## 2. Login page
-#### Allows users to login to view the contents of the Inventory
+## 2. Login pages
+
+### a) Admin Login Page
+#### Allows Admin to login to view the contents of the Inventory
 ![Login page](https://github.com/peterodero561/InventorySystem2/blob/main/static/images/login.png)
 
-### a) Database to handle the storage of user's credentials
+### b) User Login page
+#### Allows users to login to view the records
+![Sign In page](https://github.com/peterodero561/InventorySystem2/blob/main/static/images/signin.png)
+
+#### c) Allows users to Sign up
+![Sign UP page](https://github.com/peterodero561/InventorySystem2/blob/main/static/images/signup.png)
+
+### d) Database to handle the storage of users credentials
 sql code
 ```sql
 -- create table
-CREATE TABLE IF NOT EXISTS accounts (
-	id INT AUTO_INCREMENT PRIMARY KEY,
-	username VARCHAR(20) NOT NULL UNIQUE,
-	password VARCHAR(20) NOT NULL,
-	email VARCHAR(20) NOT NULL,
+CREATE TABLE IF NOT EXISTS users (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        fullname VARCHAR(100) NOT NULL UNIQUE,
+        password VARCHAR(100) NOT NULL,
+        email VARCHAR(100) NOT NULL,
 );
 -- test cases
 INSERT INTO accounts (username, password, email) VALUES
