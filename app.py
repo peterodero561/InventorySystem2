@@ -12,9 +12,9 @@ app = Flask(__name__)
 CORS(app)
 
 # Configurations of MySQL
-app.config['MYSQL_USER'] = 'root'
+app.config['MYSQL_USER'] = 'glen'
 app.config['MYSQL_HOST'] = 'localhost'
-app.config['MYSQL_PASSWORD'] = 'Peterodero561@'
+app.config['MYSQL_PASSWORD'] = 'Serah@123'
 app.config['MYSQL_DB'] = 'inventory'
 
 mysql = MySQL(app)
@@ -116,7 +116,10 @@ def login():
             session['id'] = user['id']
             session['email'] = user['email']
             message = 'Logged in Succesfully'
-            return render_template('home.html', message=message)
+            if user['email'] == 'ogolladorwino6@gmail.com':
+                return render_template('home.html', message=message)
+            else:
+                return render_template('home2.html', message=message)
         else:
             message = 'Incorrect username/password'
 
