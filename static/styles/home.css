@@ -106,3 +106,38 @@ button {
 .delete:hover {
     background-color: #c82333;
 }
+
+.dashboard {  
+    width: 99%;
+    height: 50px;
+    border: 2px solid;
+    border-radius: 3px;
+    background-color: rgb(106, 106, 106); 
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.buttons {
+    align-items: center;
+    display: flex;
+    flex-grow: 1;
+    
+}
+
+.buttons button {
+    flex: 1;
+    height: 100%;
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 20px;
+    
+}
+
+.buttons button:hover {
+    background-color: #43ea6a;
+}
+
+.buttons button.active {
+    background-color: #219401; /* Example active color */
+    color: white; /* Optional: change text color for active button */
+}
