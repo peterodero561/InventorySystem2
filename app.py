@@ -12,9 +12,9 @@ app = Flask(__name__)
 CORS(app)
 
 # Configurations of MySQL
-app.config['MYSQL_USER'] = 'glen'
+app.config['MYSQL_USER'] = 'root'
 app.config['MYSQL_HOST'] = 'localhost'
-app.config['MYSQL_PASSWORD'] = 'Serah@123'
+app.config['MYSQL_PASSWORD'] = 'Peterodero561@'
 app.config['MYSQL_DB'] = 'inventory'
 
 mysql = MySQL(app)
@@ -23,9 +23,13 @@ mysql = MySQL(app)
 app.secret_key = '1234'
 
 
-@app.route('/add', methods=['POST'])
-def add_item():
+@app.route('/add/<string:table_name>', methods=['POST'])
+def add_item(table_name='ict'):
     try:
+        # Validate table name to prevent SQL errors
+        if table_name not in ['ict', 'furniture', 'attractive', 'vehicle']:
+            return 'Invalid table name', 400
+        
         data = request.get_json()
         name = data['itemName']
         quantity = data['itemQuantity']
@@ -34,7 +38,8 @@ def add_item():
         notes = data['itemNotes']
 
         cur = mysql.connection.cursor()
-        cur.execute('INSERT INTO general (item_name, item_quantity, item_category, brand, notes) VALUES (%s, %s, %s, %s, %s)', (name, quantity, category, brand, notes))
+        query = f'INSERT INTO {table_name} (item_name, item_quantity, item_category, brand, notes) VALUES (%s, %s, %s, %s, %s)'
+        cur.execute(query, (name, quantity, category, brand, notes))
         mysql.connection.commit()
         cur.close()
 
@@ -43,34 +48,48 @@ def add_item():
         return str(e), 400
 
 
-@app.route('/stock', methods=['GET'])
-def get_stock():
-    # getting the data stored in the Inventory database in general table
-    cur = mysql.connection.cursor()
-    cur.execute('SELECT * FROM general')
-    results = cur.fetchall()
-    cur.close()
+@app.route('/stock/<string:table_name>', methods=['GET'])
+def get_stock(table_name):
+    try:
+        # Validate table name to prevent SQL errors
+        if table_name not in ['ict', 'furniture', 'attractive', 'vehicle']:
+            return 'Invalid table name', 400
+        
+        # getting the data stored in the Inventory database in the specified table
+        cur = mysql.connection.cursor()
+        query = f'SELECT * FROM {table_name}'
+        cur.execute(query)
+        results = cur.fetchall()
+        cur.close()
 
-    # arranging the results
-    stocks = []
-    for row in results:
-        stock = {
+        # arranging the results
+        stocks = []
+        for row in results:
+            stock = {
                 'item_id': row[0],
                 'itemName': row[1],
                 'itemQuantity': row[2],
                 'itemCategory': row[3],
                 'itemBrand': row[4],
                 'itemNotes': row[5]
-                }
-        stocks.append(stock)
+            }
+            stocks.append(stock)
 
-    return jsonify(stocks), 200
+        return jsonify(stocks), 200
 
-@app.route('/delete/<int:item_id>', methods=['DELETE'])
-def del_item(item_id):
+    except Exception as e:
+        return str(e), 400
+
+@app.route('/delete/<string:table_name>/<int:item_id>', methods=['DELETE'])
+def del_item(table_name, item_id):
     try:
+        # Validate table name to prevent SQL errors
+        if table_name not in ['ict', 'furniture', 'attractive', 'vehicle']:
+            return 'Invalid table name', 400
+        
         cur = mysql.connection.cursor()
-        cur.execute('DELETE FROM general WHERE item_id=%s', (item_id,))
+        query = f'DELETE FROM {table_name} WHERE item_id=%s'
+        cur.execute(query, (item_id,))
         mysql.connection.commit()
         cur.close()
 
@@ -80,8 +99,8 @@ def del_item(item_id):
         return str(e), 400
 
 
-@app.route('/edit/<int:item_id>', methods=['PUT'])
-def edit_item(item_id):
+@app.route('/edit/<string:table_name>/<int:item_id>', methods=['PUT'])
+def edit_item(table_name, item_id):
     try:
         data = request.get_json()
         name = data['itemName']
@@ -91,7 +110,8 @@ def edit_item(item_id):
         notes = data['itemNotes']
 
         cur = mysql.connection.cursor()
-        cur.execute('UPDATE general SET item_name=%s, item_quantity=%s, item_category=%s, brand=%s, notes=%s WHERE item_id=%s', (name, quantity, category, brand,notes, item_id))
+        query = f'UPDATE {table_name} SET item_name=%s, item_quantity=%s, item_category=%s, brand=%s, notes=%s WHERE item_id=%s'
+        cur.execute(query, (name, quantity, category, brand,notes, item_id))
         mysql.connection.commit()
         cur.close()
 
@@ -116,7 +136,7 @@ def login():
             session['id'] = user['id']
             session['email'] = user['email']
             message = 'Logged in Succesfully'
-            if user['email'] == 'ogolladorwino6@gmail.com':
+            if user['email'] == 'peterodero561@gmail.com':
                 return render_template('home.html', message=message)
             else:
                 return render_template('home2.html', message=message)
