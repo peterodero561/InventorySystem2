@@ -1,3 +1,17 @@
+document.querySelectorAll('.buttons button').forEach(button => {
+    button.addEventListener('click', function() {
+        // Remove active class from all buttons
+        document.querySelectorAll('.buttons button').forEach(btn => btn.classList.remove('active'));
+
+        // Add active class to the clicked button
+        this.classList.add('active');
+
+        const tableName = this.value;
+        document.getElementById('table-name').value = tableName;
+        fetchStock(tableName);
+    });
+});
+
 document.getElementById('inventory-form').addEventListener('submit', function(event) {
     event.preventDefault();
 
@@ -7,7 +21,12 @@ document.getElementById('inventory-form').addEventListener('submit', function(ev
     const itemBrand = document.getElementById('item-brand').value;
     const itemNotes = document.getElementById('item-notes').value;
 
-    fetch ('http://localhost:5000/add', {
+    const tableName = document.getElementById('table-name').value;
+    if (!tableName) {
+        tableName = 'ict';
+    }
+
+    fetch (`http://localhost:5000/add/${tableName}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -20,7 +39,7 @@ document.getElementById('inventory-form').addEventListener('submit', function(ev
     }).then(response => {
         if (response.ok) {
             console.log('Item added successfully');
-            fetchStock()
+            fetchStock(tableName)
         } else {
             throw new Error('Failed to add equipment')
         }
@@ -30,8 +49,8 @@ document.getElementById('inventory-form').addEventListener('submit', function(ev
     });
 });
 
-async function fetchStock() {
-    const response = await fetch('http://localhost:5000/stock');
+async function fetchStock(tableName) {
+    const response = await fetch(`http://localhost:5000/stock/${tableName}`);
     const stocks = await response.json();
     const tbody = document.querySelector('#inventory-table tbody');
     tbody.innerHTML = '';
@@ -72,26 +91,28 @@ async function fetchStock() {
     document.querySelectorAll('.edit').forEach(button => {
         button.addEventListener('click', function() {
             const itemId = this.dataset.id;
-            editItem(itemId);
+            const tableName = this.dataset.table;
+            editItem(tableName, itemId);
         });
     });
 
     document.querySelectorAll('.delete').forEach(button => {
         button.addEventListener('click', function() {
             const itemId = this.dataset.id;
-            deleteItem(itemId);
+            const tableName = this.dataset.table;
+            editItem(tableName, itemId);
         });
     });
 }
 
-async function editItem(itemId) {
+async function editItem(tableName, itemId) {
     const itemName = prompt('Enter new item name:');
     const itemQuantity = prompt('Enter new quantity:');
     const itemCategory = prompt('Enter new category:');
     const itemBrand = prompt('Enter new brand:');
     const itemNotes = prompt('Enter new notes:');
 
-    fetch(`http://localhost:5000/edit/${itemId}`, {
+    fetch(`http://localhost:5000/edit/${tableName}/${itemId}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -111,8 +132,8 @@ async function editItem(itemId) {
     }).catch(error => console.error('Error:', error));
 }
 
-async function deleteItem(itemId) {
-    fetch(`http://localhost:5000/delete/${itemId}`, {
+async function deleteItem(tableName, itemId) {
+    fetch(`http://localhost:5000/delete/${tableName}/${itemId}`, {
         method: 'DELETE'
     }).then(response => {
         if (response.ok) {
@@ -124,7 +145,7 @@ async function deleteItem(itemId) {
     }).catch(error => console.error('Error:', error));
 }
 
-fetchStock();
+fetchStock('ict');
 
 document.getElementById('logout').addEventListener('click', async function(event){
     //window.location.href='login.html';
