@@ -136,7 +136,7 @@ def login():
             session['id'] = user['id']
             session['email'] = user['email']
             message = 'Logged in Succesfully'
-            if user['email'] == 'peterodero561@gmail.com':
+            if user['email'] == 'peterodero561@gmail.com' or user['email'] == 'dorwinogollao6@gmail.com':
                 return render_template('home.html', message=message)
             else:
                 return render_template('home2.html', message=message)
