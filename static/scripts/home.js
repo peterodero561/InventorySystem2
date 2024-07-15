@@ -76,7 +76,7 @@ async function fetchStock(tableName) {
         td3.textContent = stock.itemCategory;
         td4.textContent = stock.itemBrand;
         td5.textContent = stock.itemNotes;
-        td6.innerHTML = `<button class="edit" data-id="${stock.item_id}">Edit</button><button class="delete" data-id="${stock.item_id}">Delete</button>`;
+        td6.innerHTML = `<button class="edit" data-id="${stock.item_id}" data-table="${tableName}">Edit</button><button class="delete" data-id="${stock.item_id}" data-table="${tableName}">Delete</button>`;
 
         tr.appendChild(td1);
         tr.appendChild(td2);
@@ -100,7 +100,7 @@ async function fetchStock(tableName) {
         button.addEventListener('click', function() {
             const itemId = this.dataset.id;
             const tableName = this.dataset.table;
-            editItem(tableName, itemId);
+            deleteItem(tableName, itemId);
         });
     });
 }
@@ -125,7 +125,7 @@ async function editItem(tableName, itemId) {
     }).then(response => {
         if (response.ok) {
             console.log('Item edited successfully');
-            fetchStock();
+            fetchStock(tableName);
         } else {
             console.error('Failed to edit item');
         }
@@ -138,7 +138,7 @@ async function deleteItem(tableName, itemId) {
     }).then(response => {
         if (response.ok) {
             console.log('Item deleted successfully');
-            fetchStock();
+            fetchStock(tableName);
         } else {
             console.error('Failed to delete item');
         }
