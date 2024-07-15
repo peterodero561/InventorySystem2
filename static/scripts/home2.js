@@ -1,47 +1,57 @@
-async function fetchStock() {
-    try {
-        const response = await fetch('http://localhost:5000/stock');
-        if (!response.ok) {
-            throw new Error('Failed to fetch stock data');
-        }
-        const stocks = await response.json();
-        const tbody = document.querySelector('#inventory-table tbody');
-        tbody.innerHTML = '';
 
-        stocks.forEach((stock, index) => {
-            const tr = document.createElement('tr');
+document.querySelectorAll('.buttons button').forEach(button => {
+    button.addEventListener('click', function() {
+        // Remove active class from all buttons
+        document.querySelectorAll('.buttons button').forEach(btn => btn.classList.remove('active'));
 
-            // Create and populate numbering cell
-            const tdNumber = document.createElement('td');
-            tdNumber.textContent = index + 1; // Start numbering from 1
-            tr.appendChild(tdNumber);
+        // Add active class to the clicked button
+        this.classList.add('active');
 
-            const td1 = document.createElement('td');
-            const td2 = document.createElement('td');
-            const td3 = document.createElement('td');
-            const td4 = document.createElement('td');
-            const td5 = document.createElement('td');
+        const tableName = this.value;
+        document.getElementById('table-name').value = tableName;
+        fetchStock(tableName);
+    });
+});
+async function fetchStock(tableName) {
+    const response = await fetch(`http://localhost:5000/stock/${tableName}`);
+    const stocks = await response.json();
+    const tbody = document.querySelector('#inventory-table tbody');
+    tbody.innerHTML = '';
 
-            td1.textContent = stock.itemName;
-            td2.textContent = stock.itemQuantity;
-            td3.textContent = stock.itemCategory;
-            td4.textContent = stock.itemBrand;
-            td5.textContent = stock.itemNotes;
+    stocks.forEach((stock, index) => {
+    
+        const tr = document.createElement('tr');
 
-            tr.appendChild(td1);
-            tr.appendChild(td2);
-            tr.appendChild(td3);
-            tr.appendChild(td4);
-            tr.appendChild(td5);
+        // Create and populate numbering cell
+        const tdNumber = document.createElement('td');
+        tdNumber.textContent = index + 1; // Start numbering from 1
+        tr.appendChild(tdNumber);
 
-            tbody.appendChild(tr);
-        });
-    } catch (error) {
-        console.error('Error fetching data:', error);
-    }
+        const td1 = document.createElement('td');
+        const td2 = document.createElement('td');
+        const td3 = document.createElement('td');
+        const td4 = document.createElement('td');
+        const td5 = document.createElement('td');
+        
+
+        td1.textContent = stock.itemName;
+        td2.textContent = stock.itemQuantity;
+        td3.textContent = stock.itemCategory;
+        td4.textContent = stock.itemBrand;
+        td5.textContent = stock.itemNotes;
+
+        tr.appendChild(td1);
+        tr.appendChild(td2);
+        tr.appendChild(td3);
+        tr.appendChild(td4);
+        tr.appendChild(td5);
+        
+
+        tbody.appendChild(tr);
+    });
 }
 
-fetchStock();
+fetchStock('ict')
 
 document.getElementById('logout').addEventListener('click', async function(event){
     //window.location.href='login.html';
