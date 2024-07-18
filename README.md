@@ -23,7 +23,7 @@ CREATE TABLE general(
 
 ### b) Edit and Delete Functionality to the records  being stored
 One can now edit the records stored in the database via prompt windows
-![home page3](https://github.com/peterodero561/InventorySystem2/blob/main/static/images/home3.png)
+![home page3](https://github.com/peterodero561/InventorySystem2/blob/main/static/images/home5.png)
 
 
 ## 2. Login pages
@@ -33,7 +33,7 @@ One can now edit the records stored in the database via prompt windows
 ![Login page](https://github.com/peterodero561/InventorySystem2/blob/main/static/images/login.png)
 
 #### Admin homepage
-![Login page](https://github.com/peterodero561/InventorySystem2/blob/main/static/images/home3.png)
+![Login page](https://github.com/peterodero561/InventorySystem2/blob/main/static/images/home6.png)
 
 ### b) User Login page
 #### Allows users to login to view the records
