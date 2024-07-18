@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sign In</title>
-    <link rel="stylesheet" href="../static/styles/signin.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/signin.css') }}">
 </head>
 <body>
     <div class="container">
@@ -23,9 +23,9 @@
             </form>
         </div>
         <div class="image-container">
-            <img src="../static/images/signup.jpeg" alt="Illustration">
+            <img src="{{ url_for('static', filename='images/signup.jpeg') }}" alt="Illustration">
         </div>
     </div>
-    <script src="../static/scripts/signin.js"></script>
+    <script src="{{ url_for('static', filename='scripts/signin.js') }}"></script>
 </body>
 </html>
