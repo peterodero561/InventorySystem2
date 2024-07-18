@@ -26,7 +26,7 @@ document.getElementById('inventory-form').addEventListener('submit', function(ev
         tableName = 'ict';
     }
 
-    fetch (`http://localhost:5000/add/${tableName}`, {
+    fetch (`http://localhost:5005/inventory/add/${tableName}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -50,7 +50,7 @@ document.getElementById('inventory-form').addEventListener('submit', function(ev
 });
 
 async function fetchStock(tableName) {
-    const response = await fetch(`http://localhost:5000/stock/${tableName}`);
+    const response = await fetch(`http://localhost:5005/inventory/stock/${tableName}`);
     const stocks = await response.json();
     const tbody = document.querySelector('#inventory-table tbody');
     tbody.innerHTML = '';
@@ -112,7 +112,7 @@ async function editItem(tableName, itemId) {
     const itemBrand = prompt('Enter new brand:');
     const itemNotes = prompt('Enter new notes:');
 
-    fetch(`http://localhost:5000/edit/${tableName}/${itemId}`, {
+    fetch(`http://localhost:5005/inventory/edit/${tableName}/${itemId}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -133,7 +133,7 @@ async function editItem(tableName, itemId) {
 }
 
 async function deleteItem(tableName, itemId) {
-    fetch(`http://localhost:5000/delete/${tableName}/${itemId}`, {
+    fetch(`http://localhost:5005/inventory/delete/${tableName}/${itemId}`, {
         method: 'DELETE'
     }).then(response => {
         if (response.ok) {
@@ -152,7 +152,7 @@ document.getElementById('logout').addEventListener('click', async function(event
     event.preventDefault();
 
     try {
-        const response = await fetch('/logout', {
+        const response = await fetch('/inventory/logout', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'}
         });
