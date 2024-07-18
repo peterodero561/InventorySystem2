@@ -23,7 +23,7 @@ mysql = MySQL(app)
 app.secret_key = '1234'
 
 
-@app.route('/inventory/add/<string:table_name>', methods=['POST'])
+@app.route('/inventory/add/<string:table_name>', methods=['POST'], strict_slashes=False)
 def add_item(table_name='ict'):
     try:
         # Validate table name to prevent SQL errors
@@ -48,7 +48,7 @@ def add_item(table_name='ict'):
         return str(e), 400
 
 
-@app.route('/inventory/stock/<string:table_name>', methods=['GET'])
+@app.route('/inventory/stock/<string:table_name>', methods=['GET'], strict_slashes=False)
 def get_stock(table_name):
     try:
         # Validate table name to prevent SQL errors
@@ -80,7 +80,7 @@ def get_stock(table_name):
     except Exception as e:
         return str(e), 400
 
-@app.route('/inventory/delete/<string:table_name>/<int:item_id>', methods=['DELETE'])
+@app.route('/inventory/delete/<string:table_name>/<int:item_id>', methods=['DELETE'], strict_slashes=False)
 def del_item(table_name, item_id):
     try:
         # Validate table name to prevent SQL errors
@@ -99,7 +99,7 @@ def del_item(table_name, item_id):
         return str(e), 400
 
 
-@app.route('/inventory/edit/<string:table_name>/<int:item_id>', methods=['PUT'])
+@app.route('/inventory/edit/<string:table_name>/<int:item_id>', methods=['PUT'], strict_slashes=False)
 def edit_item(table_name, item_id):
     try:
         data = request.get_json()
@@ -120,8 +120,8 @@ def edit_item(table_name, item_id):
     except Exception as e:
         return str(e), 400
 
-@app.route('/inventory', methods=['GET', 'POST'])
-@app.route('/inventory/login', methods=['GET', 'POST'])
+@app.route('/inventory', methods=['GET', 'POST'], strict_slashes=False)
+@app.route('/inventory/login', methods=['GET', 'POST'], strict_slashes=False)
 def login():
     message = ''
     if request.method == 'POST' and 'email' in request.form and 'password' in request.form:
@@ -146,14 +146,14 @@ def login():
     return render_template('signin.html', message=message)
 
 
-@app.route('/inventory/logout', methods=['POST', 'GET'])
+@app.route('/inventory/logout', methods=['POST', 'GET'], strict_slashes=False)
 def logout():
     session.pop('loggedin', None)
     session.pop('id', None)
     session.pop('username', None)
     return redirect(url_for('login'))
 
-@app.route('/inventory/register', methods=['POST', 'GET'])
+@app.route('/inventory/register', methods=['POST', 'GET'], strict_slashes=False)
 def register():
     message = ''
     if request.method == 'POST' and 'fullname' in request.form and 'password' in request.form and 'email' in request.form:
