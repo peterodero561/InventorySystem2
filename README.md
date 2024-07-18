@@ -40,7 +40,7 @@ One can now edit the records stored in the database via prompt windows
 ![Sign In page](https://github.com/peterodero561/InventorySystem2/blob/main/static/images/signin.png)
 
 #### Users home page
-![user home page](https://github.com/peterodero561/InventorySystem2/blob/main/static/images/home6.png)
+![user home page](https://github.com/peterodero561/InventorySystem2/blob/main/static/images/home5.png)
 
 #### Allows users to Sign up
 ![Sign UP page](https://github.com/peterodero561/InventorySystem2/blob/main/static/images/signup.png)
