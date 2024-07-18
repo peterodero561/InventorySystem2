@@ -13,7 +13,7 @@ document.querySelectorAll('.buttons button').forEach(button => {
     });
 });
 async function fetchStock(tableName) {
-    const response = await fetch(`http://localhost:5000/stock/${tableName}`);
+    const response = await fetch(`http://localhost:5005/inventory/stock/${tableName}`);
     const stocks = await response.json();
     const tbody = document.querySelector('#inventory-table tbody');
     tbody.innerHTML = '';
@@ -58,7 +58,7 @@ document.getElementById('logout').addEventListener('click', async function(event
     event.preventDefault();
 
     try {
-        const response = await fetch('/logout', {
+        const response = await fetch('/inventory/logout', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'}
         });
