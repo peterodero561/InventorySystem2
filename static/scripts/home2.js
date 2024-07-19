@@ -64,7 +64,7 @@ document.getElementById('logout').addEventListener('click', async function(event
         });
         
         if (response.ok) {
-            window.location.href = '/login'
+            window.location.href = '/inventory/login'
         } else {
             console.error('Logout Failed');
         }
