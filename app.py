@@ -146,6 +146,7 @@ def login():
     return render_template('signin.html', message=message)
 
 
+
 @app.route('/inventory/logout', methods=['POST', 'GET'], strict_slashes=False)
 def logout():
     session.pop('loggedin', None)
