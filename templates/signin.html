@@ -10,7 +10,7 @@
     <div class="container">
         <div id="form-container">
             <!-- Login Form -->
-            <form id="login-form" class="form" method="POST">
+            <form id="login-form" class="form" method="POST" action="{{ url_for('register') }}">
                 <h2>Sign in</h2>
                 <label for="login-email">Email</label>
                 <input type="email" id="login-email" name="email" placeholder="Email" required>
@@ -30,6 +30,6 @@
             <img src="{{ url_for('static', filename='images/signup.jpeg') }}" alt="Illustration">
         </div>
     </div>
-    <script src="{{ url_for('static', filename='scripts/signin.js') }}"></script>
+<!--     <script src="{{ url_for('static', filename='scripts/signin.js') }}"></script> -->
 </body>
 </html>
