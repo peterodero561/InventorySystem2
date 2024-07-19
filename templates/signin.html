@@ -21,6 +21,10 @@
                     <a href="/inventory/register">Sign Up</a>
                 </p>
             </form>
+            <!-- Display message from Flask -->
+            {% if message %}
+                <p>{{ message }}</p>
+            {% endif %}
         </div>
         <div class="image-container">
             <img src="{{ url_for('static', filename='images/signup.jpeg') }}" alt="Illustration">
