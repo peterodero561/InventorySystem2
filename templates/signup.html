@@ -10,7 +10,7 @@
     <div class="container">
         <div id="form-container">
             <!-- Signup Form -->
-            <form id="signup-form" class="form" method="POST" action="/register">
+            <form id="signup-form" class="form" method="POST" action="{{ url_for('register') }}">
                 <h2>Sign up</h2>
                 <input type="text" placeholder="Full Name" name="fullname" required>
                 <input type="email" placeholder="Email" name="email" required>
