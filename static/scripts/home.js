@@ -154,7 +154,9 @@ document.getElementById('logout').addEventListener('click', async function(event
     try {
         const response = await fetch('/inventory/logout', {
             method: 'POST',
-            headers: {'Content-Type': 'application/json'}
+            headers: {'Content-Type': 'application/json',
+                      'Accept': 'application/json'
+                     }
         });
         
         if (response.ok) {
