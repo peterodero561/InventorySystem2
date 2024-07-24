@@ -1,5 +1,20 @@
 # INVENTORY SYSTEM 2.0H
 
+## Introduction
+project landing page
+```
+http://peterdev.tech/inventory/login
+```
+Projects blog
+```
+https://www.linkedin.com/pulse/welcome-inventory-system-peter-omondi-bys8f
+```
+Authors LinkedIn
+```
+https://www.linkedin.com/in/0deroPeter
+
+```
+
 ## 1. Home Page
 
 #### where all the records of the data stored will be displayed
