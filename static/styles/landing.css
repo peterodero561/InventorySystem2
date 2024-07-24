@@ -1,0 +1,113 @@
+body {
+    font-family: 'Times New Roman', Times, serif, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-image: url('depositphotos_524071248-stock-photo-smart-warehouse-management-system-with.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+.container {
+    max-width: 1200px;
+
+    margin: 0 auto;
+    padding: 20px;
+}
+
+header {
+    text-align: center;
+    padding: 100px 0;
+    color: white;
+    background: rgba(0, 0, 0, 0.5);
+}
+
+header .cta {
+    padding: 10px 20px;
+    background-color: #ff6b6b;
+    border: none;
+    color: white;
+    font-size: 1.2em;
+    cursor: pointer;
+}
+
+header .cta:hover {
+    background-color: #ff5252;
+}
+
+.features {
+    background-color: #fff;
+    padding: 50px 0;
+}
+
+.features h2 {
+    text-align: center;
+}
+
+.features ul {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    justify-content: space-around;
+}
+
+.features li {
+    width: 200px;
+    text-align: center;
+}
+
+.testimonials {
+    background-color: #f9f9f9;
+    padding: 50px 0;
+}
+
+.testimonials h2 {
+    text-align: center;
+}
+
+.testimonials blockquote {
+    font-style: italic;
+    text-align: center;
+}
+
+.contact {
+    background-color: #fff;
+    padding: 50px 0;
+}
+
+.contact form {
+    max-width: 600px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.contact label {
+    margin: 10px 0 5px;
+}
+
+.contact input, .contact textarea {
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+}
+
+.contact button.cta {
+    padding: 10px 20px;
+    background-color: #ff6b6b;
+    border: none;
+    color: white;
+    font-size: 1.2em;
+    cursor: pointer;
+}
+
+.contact button.cta:hover {
+    background-color: #ff5252;
+}
+
+footer {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 20px 0;
+}
